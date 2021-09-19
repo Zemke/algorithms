@@ -5,12 +5,10 @@ from sys import exit
 
 
 def safe(grid, row_idx, col_idx):
-  if row_idx < 0 or col_idx < 0:
-    return None
-  try:
+  if (row_idx >= 0 and row_idx < len(grid)
+      and col_idx >= 0 and col_idx < len(grid[row_idx])):
     return grid[row_idx][col_idx]
-  except IndexError:
-    return None
+  return None
 
 
 def neighbors(grid, row_idx, col_idx):
