@@ -2,6 +2,12 @@
 
 import numpy as np
 
+"""
+Find all combinations in a matrix. Use all elements once.
+Elements can only be connected to the left, right, top bottom.
+Not diagonally.
+"""
+
 
 def safe(grid, row_idx, col_idx):
   if (row_idx >= 0 and row_idx < len(grid)

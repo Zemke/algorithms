@@ -39,6 +39,9 @@ M = np.array([['A', 'M'],
 
 
 def create_G(M):
+  """
+  Create graph from a matrix.
+  """
   G = []
   for row_idx, row in enumerate(M):
     for col_idx, col in enumerate(M[row_idx]):
@@ -58,6 +61,9 @@ def adj(G, v):
 
 
 def traverse_iter(G, v):
+  """
+  Iterative depth-first search
+  """
   S = [v]
   vv = []
   while len(S) > 0:
@@ -70,6 +76,9 @@ def traverse_iter(G, v):
 
 
 def traverse_rec(G, v, vv = []):
+  """
+  Recursive depth-first search
+  """
   for w in adj(G, v):
     if w not in vv:
       vv.append(w)
