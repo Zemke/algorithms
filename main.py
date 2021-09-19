@@ -29,8 +29,6 @@ print(M)
 
 
 def do(M, m, row_idx, col_idx, size, W=''):
-  if m is None:
-    return
   nn = neighbors(M, row_idx, col_idx)
   for n_idx, n_tuple in enumerate(nn.items()):
     n_row_idx, n_col_idx = n_tuple[1]
