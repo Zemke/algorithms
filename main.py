@@ -52,24 +52,12 @@ def create_G(M):
 def adj(G, v):
   adj = []
   for w in G:
-    if w.y == v:
-      adj.append(w.x)
+    if w.x == v:
+      adj.append(w.y)
   return adj
 
 
-def traverse_iter(G, v):
-  S = [v]
-  vv = []
-  while len(S) > 0:
-    v = S.pop()
-    if v not in vv:
-      vv.append(v)
-      print(v, end=' ')
-      for w in adj(G, v):
-        S.append(w)
-
-
-def traverse_rec(G, v, vv = []):
+def traverse_rec(G, v, vv=[]):
   for w in adj(G, v):
     if w not in vv:
       vv.append(w)
@@ -80,8 +68,12 @@ def traverse_rec(G, v, vv = []):
 print(M)
 G = create_G(M)
 print("G", G)
-print('iter', end=': '); traverse_iter(G, G[0].x)
-print()
-print('rec', end=': '); traverse_rec(G, G[0].x)
+
+
+for row in M:
+  for v in row:
+    traverse_rec(G, v, [])
+    print()
+
 print()
 
