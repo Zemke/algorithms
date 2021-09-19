@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import numpy as np
-from sys import exit
 
 
 def safe(grid, row_idx, col_idx):
