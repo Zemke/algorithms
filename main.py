@@ -18,7 +18,8 @@ def neighbors(grid, row_idx, col_idx):
     safe(grid, row_idx, col_idx+1): (row_idx, col_idx+1),
     safe(grid, row_idx, col_idx-1): (row_idx, col_idx-1),
   }
-  del nn[None]
+  if None in nn:
+    del nn[None]
   return nn
 
 
