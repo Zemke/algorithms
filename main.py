@@ -36,8 +36,9 @@ def do(M, m, row_idx, col_idx, size, W=''):
     mod_M[row_idx][col_idx] = None
     mod_M[n_row_idx][n_col_idx] = None
     n = n_tuple[0]
-    if np.count_nonzero(mod_M == None) == size:
-      print("done", W + m + n)
+    candidate = W + m + n
+    if len(candidate) == size:
+      print("done", candidate)
     else:
       do(mod_M, n, n_row_idx, n_col_idx, size, W + m)
 
