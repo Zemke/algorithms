@@ -1,79 +1,56 @@
 #!/usr/bin/env python3
 
 import numpy as np
+from sys import exit
 
 
-class Edge:
+def safe(grid, row_idx, col_idx):
+  if row_idx < 0 or col_idx < 0:
+    return None
+  try:
+    return grid[row_idx][col_idx]
+  except IndexError:
+    return None
 
-  def __init__(self, x, y):
-    self.x = x
-    self.y = y
 
-  def __repr__(self):
-    return "Edge({},{})".format(self.x, self.y)
-
-  @staticmethod
-  def safe(grid, row_idx, col_idx):
-    if row_idx < 0 or col_idx < 0:
-      return None
-    try:
-      return grid[row_idx][col_idx]
-    except IndexError:
-      return None
-
-    
-  @staticmethod
-  def neighbors(grid, row_idx, col_idx):
-    nn = [
-      Edge.safe(grid, row_idx+1, col_idx),
-      Edge.safe(grid, row_idx-1, col_idx),
-      Edge.safe(grid, row_idx, col_idx+1),
-      Edge.safe(grid, row_idx, col_idx-1),
-    ]
-    return list(filter(lambda n: n is not None, nn))
-
+def neighbors(grid, row_idx, col_idx):
+  nn = {
+    safe(grid, row_idx+1, col_idx): (row_idx+1, col_idx),
+    safe(grid, row_idx-1, col_idx): (row_idx-1, col_idx),
+    safe(grid, row_idx, col_idx+1): (row_idx, col_idx+1),
+    safe(grid, row_idx, col_idx-1): (row_idx, col_idx-1),
+  }
+  del nn[None]
+  return nn
 
 
 M = np.array([['A', 'M'],
-              ['G', 'E']])
-
-
-def create_G(M):
-  G = []
-  for row_idx, row in enumerate(M):
-    for col_idx, col in enumerate(M[row_idx]):
-      m = M[row_idx][col_idx]
-      nn = Edge.neighbors(M, row_idx, col_idx)
-      for n in nn:
-        G.append(Edge(m, n))
-  return G
-
-
-def adj(G, v):
-  adj = []
-  for w in G:
-    if w.x == v:
-      adj.append(w.y)
-  return adj
-
-
-def traverse_rec(G, v, vv=[]):
-  for w in adj(G, v):
-    if w not in vv:
-      vv.append(w)
-      print(w, end=' ')
-      traverse_rec(G, w, vv)
-
-
+              ['G', 'E']], dtype=object)
 print(M)
-G = create_G(M)
-print("G", G)
 
 
-for row in M:
-  for v in row:
-    traverse_rec(G, v, [])
-    print()
+def do(M, size, W=''):
+  for row_idx, row in enumerate(M):
+    for col_idx, m in enumerate(M[row_idx]):
+      if m is None:
+        continue
+      nn = neighbors(M, row_idx, col_idx)
+      ww = [m] * len(nn)
+      for n_idx, n_tuple in enumerate(nn.items()):
+        n = n_tuple[0]
+        n_row_idx, n_col_idx = n_tuple[1]
+        ww[n_idx] += n
+        mod_M = np.copy(M)
+        mod_M[row_idx][col_idx] = None
+        mod_M[n_row_idx][n_col_idx] = None
+        print(ww[n_idx])
+        print(mod_M)
+        if np.count_nonzero(mod_M == None) == size:
+          print("done", W + ww[n_idx])
+        else:
+          print("no")
+          do(mod_M, size, ww[n_idx] + W)
 
-print()
+
+do(M, M.size)
 
