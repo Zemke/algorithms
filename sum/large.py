@@ -2,7 +2,7 @@ s = """12384971234702134798569023694213498723
 90078071823476872134021783490721903474"""
 
 
-# Sum equally large sums
+# Sum equally long summands
 # https://www.geeksforgeeks.org/sum-two-large-numbers/
 
 
