@@ -1,0 +1,48 @@
+# N-Queen Problem 
+
+There's a `in_array.diff` showing a slightly cleaner code using `in_array`
+rather than `isset` but `isset` is much faster as it doesn't iterate the array. \
+Here is the comparison:
+
+
+using `isset`:
+
+```
+SUCCESS N=4  in 7.3909759521484E-5s
+SUCCESS N=5  in 1.6927719116211E-5s
+SUCCESS N=6  in 0.0007939338684082s
+SUCCESS N=7  in 4.8160552978516E-5s
+SUCCESS N=8  in 0.0068759918212891s
+SUCCESS N=9  in 0.0022759437561035s
+SUCCESS N=10 in 0.012237071990967s
+SUCCESS N=11 in 0.0056989192962646s
+SUCCESS N=12 in 0.067726135253906s
+SUCCESS N=13 in 0.026953935623169s
+SUCCESS N=14 in 1.975848197937s
+```
+
+using `in_array`:
+
+```
+SUCCESS N=4  in 8.3208084106445E-5s
+SUCCESS N=5  in 2.0027160644531E-5s
+SUCCESS N=6  in 0.00091695785522461s
+SUCCESS N=7  in 4.7922134399414E-5s
+SUCCESS N=8  in 0.0079309940338135s
+SUCCESS N=9  in 0.0024468898773193s
+SUCCESS N=10 in 0.0136399269104s
+SUCCESS N=11 in 0.0061779022216797s
+SUCCESS N=12 in 0.075831890106201s
+SUCCESS N=13 in 0.029969930648804s
+SUCCESS N=14 in 2.1905059814453s
+```
+
+## Trivia
+
+On macOS 11.4
+
+```
+$ php -v | head -n1
+WARNING: PHP is not recommended
+```
+

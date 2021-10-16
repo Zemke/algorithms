@@ -1,0 +1,63 @@
+diff --git a/Main.php b/Main.php
+index 729e92a..bdd7d68 100644
+--- a/Main.php
++++ b/Main.php
+@@ -26,10 +26,10 @@ class Main {
+     ];
+ 
+     $isSafeQueen = function ($p) use(&$data) {
+-      return !in_array($p->leftDiagonal(), $data['left_diag'])
+-          && !in_array($p->rightDiagonal(), $data['right_diag'])
+-          && !in_array($p->columnIndex, $data['cols'])
+-          && !in_array($p->rowIndex, $data['rows']);
++      return !isset($data['left_diag'][$p->leftDiagonal()])
++        && !isset($data['right_diag'][$p->rightDiagonal()])
++        && !isset($data['cols'][$p->columnIndex])
++        && !isset($data['rows'][$p->rowIndex]);
+     };
+ 
+     $rr = [];
+@@ -43,21 +43,34 @@ class Main {
+           $reach[$count_rr] = $i;
+           $rr[] = $p;
+ 
+-          $data['left_diag'][] = $p->leftDiagonal();
+-          $data['right_diag'][] = $p->rightDiagonal();
+-          $data['cols'][] = $p->columnIndex;
+-          $data['rows'][] = $p->rowIndex;
++          $data['left_diag'][$p->leftDiagonal()]++;
++          $data['right_diag'][$p->rightDiagonal()]++;
++          $data['cols'][$p->columnIndex]++;
++          $data['rows'][$p->rowIndex]++;
+         }
+       }
+       if (count($rr) === $N) {
+         break;
+       } else { // backtrack
+         $backtrack = array_pop($rr);
+-        
+-        unset($data['left_diag'][array_search($backtrack->leftDiagonal(), $data['left_diag'])]);
+-        unset($data['right_diag'][array_search($backtrack->rightDiagonal(), $data['right_diag'])]);
+-        unset($data['cols'][array_search($backtrack->columnIndex, $data['cols'])]);
+-        unset($data['rows'][array_search($backtrack->rowIndex, $data['rows'])]);
++
++        $data['left_diag'][$backtrack->leftDiagonal()]--;
++        $data['right_diag'][$backtrack->rightDiagonal()]--;
++        $data['cols'][$backtrack->columnIndex]--;
++        $data['rows'][$backtrack->rowIndex]--;
++
++        if ($data['left_diag'][$backtrack->leftDiagonal()] === 0) {
++          unset($data['left_diag'][$backtrack->leftDiagonal()]);
++        }
++        if ($data['right_diag'][$backtrack->rightDiagonal()] === 0) {
++          unset($data['right_diag'][$backtrack->rightDiagonal()]);
++        }
++        if ($data['cols'][$backtrack->columnIndex] === 0) {
++          unset($data['cols'][$backtrack->columnIndex]);
++        }
++        if ($data['rows'][$backtrack->rowIndex] === 0) {
++          unset($data['rows'][$backtrack->rowIndex]);
++        }
+       }
+     }
+     return $rr;
